@@ -20,7 +20,7 @@
 
       <ul>
         <TaskComponent 
-          v-for="task in Tasks" 
+          v-for="task in tasks" 
           v-bind:key="task._id" 
           v-bind:task="task"></TaskComponent>
       </ul>
@@ -59,7 +59,7 @@ export default {
       'Tasks': []
     },
 
-    Tasks() {
+    tasks() {
       console.log('Tasks Vue method', this);
       if (this.hideCompleted) {
         // If hide completed is checked, filter tasks

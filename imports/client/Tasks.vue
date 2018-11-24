@@ -4,12 +4,12 @@
  
     <input class="toggle-checked" type="checkbox" :checked="task.checked" @click="toggleChecked" />
  
-    <div v-if="isOwner">
+    <span v-if="isOwner">
       <button class="toggle-private" @click="togglePrivate">
         <span v-if="task.private">Private</span>
         <span v-else>Public</span>
       </button>
-    </div>
+    </span>
 
     <span class="text"><strong>{{task.username}}</strong> - {{task.text}}</span>
   </li>
