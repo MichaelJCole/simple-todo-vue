@@ -1,9 +1,9 @@
 <template>
   <li v-bind:class="{ checked: task.checked, private: task.private }">
     <button class="delete" @click="deleteTask">&times;</button>
- 
+
     <input class="toggle-checked" type="checkbox" :checked="task.checked" @click="toggleChecked" />
- 
+
     <span v-if="isOwner">
       <button class="toggle-private" @click="togglePrivate">
         <span v-if="task.private">Private</span>
@@ -16,17 +16,29 @@
 </template>
 
 <script>
-import { Tasks } from '/imports/both/collections/Tasks';
 
 export default {
-  data() {
-    console.log('... rendering Tasks.vue component', this);
-    return {
-      ...this.$attrs,
-    }
-  },
+  /**
+   * this was place where was bug mentioned in
+   *
+   * https://github.com/meteor/guide/issues/590
+   *
+   * You need use props or events, in this case
+   * props are simpler, when you created data
+   * especially with `return` then any component
+   * duplicated his own task detached from array
+   * of tasks from App component that was still
+   * reactive. Please explain it in text of
+   * this tutorial, because it can be confusing
+   * for many users. Great sources for further
+   * reading:
+   *
+   * > https://medium.com/front-end-weekly/vues-v-model-directive-vs-sync-modifier-d1f83957c57c
+   * > https://forum.vuejs.org/t/keeping-item-array-synced-between-children-and-parent/4044/4
+   */
+  props: ['task'],
   // Vue Methods
-  methods: {  
+  methods: {
     isOwner() {
       console.log('isOwner', this);
       return this.task.owner === Meteor.userId();
@@ -45,15 +57,5 @@ export default {
       Meteor.call('tasks.setPrivate', this.task._id, !this.task.private);
     },
   },
-  // Meteor reactivity
-  meteor: {
-    // Subscriptions - Errors not reported spelling and capitalization.
-    $subscribe: {
-      //'TaskById': [task.id]
-    },
-  }
 }
 </script>
-
-<style scoped>
-</style>
