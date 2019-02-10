@@ -35,6 +35,8 @@ export default {
    *
    * > https://medium.com/front-end-weekly/vues-v-model-directive-vs-sync-modifier-d1f83957c57c
    * > https://forum.vuejs.org/t/keeping-item-array-synced-between-children-and-parent/4044/4
+   *
+   * TODO: @MichaelJCole Remove this comment from code after reading.
    */
   props: ['task'],
   // Vue Methods

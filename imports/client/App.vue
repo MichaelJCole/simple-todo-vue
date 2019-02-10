@@ -6,7 +6,7 @@
         <h1>Todo List ({{incompleteCount}})</h1>
 
         <label class="hide-completed">
-          <input type="checkbox" @model="hideCompleted"/>
+          <input type="checkbox" v-model="hideCompleted"/>
           Hide Completed Tasks
         </label>
 
@@ -62,11 +62,11 @@ export default {
     tasks() {
       console.log('Tasks Vue method', this);
       if (this.hideCompleted) {
-        // If hide completed is checked, filter tasks
-        return Tasks.find({ checked: { $ne: true } }, { sort: { createdAt: -1 } });
+          // If hide completed is checked, filter tasks
+          return Tasks.find({ checked: {$ne: true} }, {sort: {createdAt: -1}});
       }
       // Otherwise, return all of the tasks
-      return Tasks.find({}, { sort: { createdAt: -1 } });
+      return Tasks.find({}, { sort: {createdAt: -1} });
     },
 
     incompleteCount() {
