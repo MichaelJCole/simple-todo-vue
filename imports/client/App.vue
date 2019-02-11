@@ -4,9 +4,9 @@
     <div v-else>
       <header>
         <h1>Todo List ({{incompleteCount}})</h1>
-        
+
         <label class="hide-completed">
-          <input type="checkbox" @model="hideCompleted"/>
+          <input type="checkbox" v-model="hideCompleted"/>
           Hide Completed Tasks
         </label>
 
@@ -19,10 +19,10 @@
       </header>
 
       <ul>
-        <TaskComponent 
-          v-for="task in tasks" 
-          v-bind:key="task._id" 
-          v-bind:task="task"></TaskComponent>
+        <TaskComponent
+          v-for="task in tasks"
+          :key="task._id"
+          :task="task"></TaskComponent>
       </ul>
     </div>
   </div>
@@ -45,7 +45,7 @@ export default {
     }
   },
   // Vue Methods
-  methods: {  
+  methods: {
     newTask() {
       console.log('newTask Vue method', this);
       Meteor.call('tasks.insert', this.taskName);          // not Meteor reactive
@@ -62,18 +62,18 @@ export default {
     tasks() {
       console.log('Tasks Vue method', this);
       if (this.hideCompleted) {
-        // If hide completed is checked, filter tasks
-        return Tasks.find({ checked: { $ne: true } }, { sort: { createdAt: -1 } });
+          // If hide completed is checked, filter tasks
+          return Tasks.find({ checked: {$ne: true} }, {sort: {createdAt: -1}});
       }
       // Otherwise, return all of the tasks
-      return Tasks.find({}, { sort: { createdAt: -1 } });  
+      return Tasks.find({}, { sort: {createdAt: -1} });
     },
-    
+
     incompleteCount() {
       console.log('incompleteCount Vue method');
       return Tasks.find({ checked: { $ne: true } }).count();
     },
-    
+
     currentUser: Meteor.user,
   }
 }
